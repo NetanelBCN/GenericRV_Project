@@ -164,7 +164,14 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 ```
-## Watch Me!
+## Screenshots
+
+![image](https://github.com/user-attachments/assets/3ce901d8-cc70-41aa-8ff4-9cb4d6e54a54)
+![image](https://github.com/user-attachments/assets/6439b483-3820-4e1d-b512-7ce272bec027)
+![image](https://github.com/user-attachments/assets/a1436aee-7051-4b15-9338-89ddc28c00eb)
+
+
+
 
 ## License
 

@@ -24,6 +24,7 @@ android {
     }
 
     publishing {
+
         singleVariant("release") // ✅ This tells Gradle to generate the 'release' component
     }
 

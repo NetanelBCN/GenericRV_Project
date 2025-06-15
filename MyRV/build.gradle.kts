@@ -45,7 +45,7 @@ publishing {
             }
             groupId = "com.github.NetanelBCN"
             artifactId = "GenericRV_Project"
-            version = "1.2.0"
+            version = "1.2.1"
         }
     }
 }

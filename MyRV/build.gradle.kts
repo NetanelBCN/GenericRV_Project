@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.library)
     id("maven-publish")
@@ -23,22 +24,35 @@ android {
         }
     }
 
-    publishing {
-
-        singleVariant("release") // ✅ This tells Gradle to generate the 'release' component
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
-
-
-
+publishing {
+    publications {
+        create<MavenPublication>("release") {  // Changed from "default" to "release"
+            afterEvaluate {
+                from(components["release"])    // Changed from "default" to "release"
+            }
+            groupId = "com.github.NetanelBCN"
+            artifactId = "GenericRV_Project"
+            version = "1.2.0"
+        }
+    }
+}
 
 dependencies {
+    // Removed this line - it shouldn't be in dependencies block:
+    // implementation("com.android.tools.build:gradle:8.0.0")
 
     implementation(libs.appcompat)
     implementation(libs.material)

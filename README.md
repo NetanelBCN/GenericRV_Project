@@ -1,36 +1,51 @@
-
 # Generic Recycler View
-
 
 ## Overview
 
 A library designed to simplify working with RecyclerView in Android applications. It provides basic Adapters and ViewHolders that are easy to adapt and expand as needed. The goal is to make it easier for developers to build scrolling lists quickly and simply, without getting involved with complex code.
 
-
-
-
 ## Installation
 
-Install the library by Gradle
+You can include the Generic RecyclerView Library in your project in two ways:
 
-To include the Generic RV Library in your Android project, add the following dependency to your project's build.gradle file:
+### Option 1: JitPack (Recommended)
 
-#### If you dowanload the library manually:
+1. Add the JitPack repository to your **root-level `build.gradle`** file:
 
+```gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
-    implementation(project(":MyRV"))
 
+2. Add the dependency in your **module-level `build.gradle`** file:
 
+```gradle
+dependencies {
+    implementation 'com.github.NetanelBCN:MyRV:Tag'
+}
 ```
 
+> ✅ Replace `Tag` with the latest version tag (e.g. `1.0.0`).
 
+---
+
+### Option 2: Manual Import
+
+If you downloaded the library manually:
+
+```gradle
+implementation project(":MyRV")
+```
 
 ## Usage/Examples
 
-### create a layout_item for example:
+### Create a layout item (example: `my_card.xml`):
 
-
-```java
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -90,21 +105,23 @@ To include the Generic RV Library in your Android project, add the following dep
 </androidx.cardview.widget.CardView>
 ```
 
-### In your main xml layout add a RV:
-```java
-  <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+### Add RecyclerView in your main XML layout:
 
+```xml
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recyclerView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 ```
-### Create an item class if needed, for example:
+
+### Create an item class:
+
 ```java
-  public class CardItem {
+public class CardItem {
     private int imageResId;
     private String title;
     private String description;
@@ -120,10 +137,10 @@ To include the Generic RV Library in your Android project, add the following dep
     public String getDescription() { return description; }
 }
 ```
-### And now you can use the library features in the main activity
+
+### Use the library in your main activity:
 
 ```java
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -133,56 +150,51 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        // Create a list of custom objects instead of just strings
         List<CardItem> items = Arrays.asList(
-                new CardItem(R.drawable.image1, "Item 1", "Description 1"),
-                new CardItem(R.drawable.image2, "Item 2", "Description 2"),
-                new CardItem(R.drawable.image3, "Item 3", "Description 3"),
-                new CardItem(R.drawable.image4, "Item 4", "Description 4"),
-                new CardItem(R.drawable.image5, "Item 5", "Description 5")
+            new CardItem(R.drawable.image1, "Item 1", "Description 1"),
+            new CardItem(R.drawable.image2, "Item 2", "Description 2"),
+            new CardItem(R.drawable.image3, "Item 3", "Description 3"),
+            new CardItem(R.drawable.image4, "Item 4", "Description 4"),
+            new CardItem(R.drawable.image5, "Item 5", "Description 5")
         );
 
-        RecyclerViewUtils.setupRecyclerView(
-                recyclerView,
-                items,
-                R.layout.my_card,
-                (holder, item, position) -> {
-                    ImageView imageView = holder.itemView.findViewById(R.id.itemImage);
-                    TextView titleView = holder.itemView.findViewById(R.id.itemTitle);
-                    TextView descriptionView = holder.itemView.findViewById(R.id.itemDescription);
+        RecyclerViewAdapter adapter = RecyclerViewUtils.setupRecyclerView(
+            recyclerView,
+            items,
+            R.layout.my_card,
+            (holder, item, position) -> {
+                ImageView imageView = holder.itemView.findViewById(R.id.itemImage);
+                TextView titleView = holder.itemView.findViewById(R.id.itemTitle);
+                TextView descriptionView = holder.itemView.findViewById(R.id.itemDescription);
 
-                    imageView.setImageResource(item.getImageResId());
-                    titleView.setText(item.getTitle());
-                    descriptionView.setText(item.getDescription());
+                imageView.setImageResource(item.getImageResId());
+                titleView.setText(item.getTitle());
+                descriptionView.setText(item.getDescription());
 
-                    holder.itemView.findViewById(R.id.itemButton).setOnClickListener(v ->
-                            Toast.makeText(this, "Button clicked: " + item.getTitle(), Toast.LENGTH_SHORT).show()
-                    );
-                },
-                (item, position) -> Toast.makeText(this, "Clicked: " + item.getTitle(), Toast.LENGTH_SHORT).show()
+                holder.itemView.findViewById(R.id.itemButton).setOnClickListener(v ->
+                    Toast.makeText(this, "Button clicked: " + item.getTitle(), Toast.LENGTH_SHORT).show()
+                );
+            },
+            (item, position) -> Toast.makeText(this, "Clicked: " + item.getTitle(), Toast.LENGTH_SHORT).show()
         );
     }
 }
 ```
+
 ## Screenshots
 
 ![image](https://github.com/user-attachments/assets/3ce901d8-cc70-41aa-8ff4-9cb4d6e54a54)
 ![image](https://github.com/user-attachments/assets/6439b483-3820-4e1d-b512-7ce272bec027)
 ![image](https://github.com/user-attachments/assets/a1436aee-7051-4b15-9338-89ddc28c00eb)
 
-## Watch me!
+## Watch Me!
 
-https://github.com/user-attachments/assets/40b9182a-cb5b-48e7-8ae8-8fa9a28ec476
-
+[📽️ Demo Video](https://github.com/user-attachments/assets/40b9182a-cb5b-48e7-8ae8-8fa9a28ec476)
 
 ## License
 
-Copyright (c) 2024 Netanel Boris Cohen Niazov
-
-
-
+© 2024 Netanel Boris Cohen Niazov
 
 ## Authors
 
 - Netanel Boris Cohen Niazov
-
